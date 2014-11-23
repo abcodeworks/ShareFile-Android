@@ -1,0 +1,19 @@
+This folder contains a script to build the icons necessary for the application.
+The contents of this folder are as follows:
+  build.xml
+    Builds the icons and places them in the appropriate Android folders.  See
+    inside the build file for dependencies.
+
+  gnome_icon/
+    Contains the original Gnome icons used to build the app icon.
+    These are licensed under GPL.
+
+    Gnome-document-properties.svg:
+      Downloaded from the following link:
+      http://commons.wikimedia.org/wiki/File:Gnome-document-properties.svg
+      Date/Time stamp on website: 10:31, 12 January 2008
+
+    Gnome-document-properties-with_wrench_removed.svg:
+      A copy of Gnome-document-properties.svg that was manually edited with a
+      text editor to remove the wrench (fortunately it was just a matter of
+      removing some layers).

@@ -1,0 +1,209 @@
+<project name="icons" default="all_ic_launchers">
+  <description>
+      Builds the icons for the application.  It is assumed that
+      imagemagick, inkscape, and optipng are installed.
+      To install these on Ubuntu: sudo apt-get install imagemagick inkscape optipng
+  	  We use the default PNG format.  We will assume that all of the resulting images
+  	  are in the proper PNG format (i.e. PNG32).
+  </description>
+
+  <!-- Create the temporary directory -->
+  <target name="tmp_dir">
+      <mkdir dir="tmp"/>
+  </target>
+
+  <!-- Create a bitmap image from the "Gnome document" vector image.
+       Make the original images large so that there is some room
+       to work without degradation -->
+  <target name="docicon_original_png" depends="tmp_dir">
+      <exec executable="inkscape">
+          <arg value="-z"/>
+          <arg value="-e"/>
+          <arg value="tmp/docicon.png"/>
+          <arg value="-w 1024"/>
+          <arg value="-h 1024"/>
+          <arg value="gnome_icon/Gnome-document-properties-with_wrench_removed.svg"/>
+      </exec>
+  </target>
+  
+  <!-- Flip the image horizontally to put the earmark on the other side
+       (this fits better with the share symbol). -->
+  <target name="docicon_flopped_png" depends="docicon_original_png">
+      <exec executable="convert">
+          <arg value="tmp/docicon.png"/>
+          <arg value="-flop"/>
+          <arg value="tmp/docicon_flopped.png"/>
+      </exec>
+  </target>
+
+  <!-- Draw the share symbol.
+       Use Android green per http://developer.android.com/distribute/googleplay/promote/brand.html -->
+  <target name="sharesymbol_png" depends="tmp_dir">
+      <exec executable="convert">
+          <arg value="-size"/>
+          <arg value="1024x1024"/>
+          <arg value="xc:none"/>
+          <arg value="-fill"/>
+          <arg value="#A4C639"/>
+          <arg value="-stroke"/>
+          <arg value="#A4C639"/>
+          <arg value="-draw"/>
+          <arg value="circle 840,180 1016,180"/>
+          <arg value="-draw"/>
+          <arg value="circle 180,512 4,512"/>
+          <arg value="-draw"/>
+          <arg value="circle 840,840 1016,840"/>
+          <arg value="-strokewidth"/>
+          <arg value="130"/>
+          <arg value="-draw"/>
+          <arg value="line 180,512 840,180"/>
+          <arg value="-draw"/>
+          <arg value="line 180,512 840,840"/>
+          <arg value="tmp/sharesymbol.png"/>
+      </exec>
+  </target>
+  
+
+  <!-- Crop the icon.
+       The 1024x1024 icon has the following metrics:
+         Blank space left   = 128
+         Blank space right  = 128
+	 Blank space top    = 64
+         Blank space bottom = 64
+         non-blank area Size X = 1024 - 128 - 128 = 768
+         non-blank area Size Y = 1024 - 64 - 64 = 896
+
+       The design guidelines (http://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html)
+       use an example padding of 4 pixels on each side of a 96 x 96 image. That is roughly 4% of the image on each side
+       for a total of 8% total in each direction.  This means the image size needs to be approximately 109% larger than
+       the contents in each direction.  So these are the measurements of the final icon (make sure the total size is
+       square - since the original image is not square, use the largest dimension for both X and Y):
+         total Size X = 1.09 * 896 = 977
+         total Size Y = 1.09 * 896 = 977
+         Padding top    = 0.04 * 977 = 39
+         Padding bottom = 0.04 * 977 = 39
+
+       And this is where we need to start cropping the 1024X1024 icon:
+         Start X = 64 - 39 = 25
+         Start Y = 64 - 39 = 25
+  -->
+  <target name="docicon_cropped_png" depends="docicon_flopped_png">
+      <exec executable="convert">
+          <arg value="tmp/docicon_flopped.png"/>
+          <arg value="-crop"/>
+          <arg value="977x977+25+25"/>
+          <arg value="tmp/docicon_cropped.png"/>
+      </exec>
+  </target>
+
+  <!-- Overlay the share symbol on top of the document icon.
+       The exact location and size of the share icon was determined through trial and error. -->
+  <target name="final_1024_png" depends="docicon_cropped_png, sharesymbol_png">
+      <exec executable="convert">
+          <arg value="-size"/>
+          <arg value="1024x1024"/>
+          <arg value="-composite"/>
+          <arg value="tmp/docicon_cropped.png"/>
+          <arg value="tmp/sharesymbol.png"/>
+          <arg value="-geometry"/>
+          <arg value="560x560+224+224"/>
+          <arg value="tmp/final_1024.png"/>
+      </exec>
+  </target>
+
+  
+  <!-- Define a macro which does the following:
+       1) Resize the icon to the specified size.
+       2) Compress the resulting PNG (per the guide icon design guide:
+          http://developer.android.com/guide/practices/ui_guidelines/icon_design.html)-->
+  <macrodef name="resize_and_optimize">
+    <attribute name="src-filename"/>
+    <attribute name="new-filename"/>
+    <attribute name="new-size"/>
+    <sequential>
+      <exec executable="convert">
+	      <arg value="@{src-filename}"/>
+          <arg value="-resize"/>
+          <arg value="@{new-size}x@{new-size}"/>
+          <arg value="@{new-filename}"/>
+      </exec>
+      <exec executable="optipng">
+          <arg value="@{new-filename}" />
+      </exec>
+    </sequential>
+  </macrodef>
+
+	
+  <!-- Create the feature graphic for Android marketplace.
+       This has a wide size.  First we resize the icon and
+       place it in the middle of a 1024x500 image.
+       Then we create the final image with a white background
+       and no transparency.  Per the Android guidelines this is
+       supposed to be a 24-bit PNG.  Do we need to do further
+       conversions to achieve this???  See:
+       https://support.google.com/googleplay/android-developer/answer/1078870?hl=en -->
+  <target name="ic_launcher-feature" depends="final_1024_png">
+	<sequential>
+      <exec executable="convert">
+      	<arg value="tmp/final_1024.png"/>
+      	<arg value="-background"/>
+      	<arg value="none"/>
+      	<arg value="-resize"/>
+        <arg value="500x500"/>
+      	<arg value="-gravity"/>
+      	<arg value="center"/>
+      	<arg value="-extent"/>
+      	<arg value="1024x500"/>      	
+	    <arg value="tmp/feature_with_alpha.png"/>
+      </exec>
+	  <exec executable="convert">
+	  	<arg value="tmp/feature_with_alpha.png"/>
+		<arg value="-background"/>
+		<arg value="white"/>
+	  	<arg value="-flatten"/>
+        <arg value="../ic_launcher-feature.png"/>
+	  </exec>
+	  <exec executable="optipng">
+	      <arg value="../ic_launcher-feature.png" />
+	  </exec>
+    </sequential>
+  </target>
+  
+  <!-- Create the various icon sizes needed for the Android app. -->
+  <target name="ic_launcher-web" depends="final_1024_png">
+      <resize_and_optimize src-filename="tmp/final_1024.png"
+                           new-filename="../ic_launcher-web.png"
+			    new-size="512" />
+  </target>
+
+  <target name="xxhdpi_ic_launcher" depends="final_1024_png">
+	  <resize_and_optimize src-filename="tmp/final_1024.png"
+	                       new-filename="../res/drawable-xxhdpi/ic_launcher.png"
+	                       new-size="144" />
+  </target>
+	
+  <target name="xhdpi_ic_launcher" depends="final_1024_png">
+      <resize_and_optimize src-filename="tmp/final_1024.png"
+                           new-filename="../res/drawable-xhdpi/ic_launcher.png"
+                           new-size="96" />
+  </target>
+
+  <target name="hdpi_ic_launcher" depends="final_1024_png">
+      <resize_and_optimize src-filename="tmp/final_1024.png"
+                           new-filename="../res/drawable-hdpi/ic_launcher.png"
+                           new-size="72" />
+  </target>
+
+  <target name="mdpi_ic_launcher" depends="final_1024_png">
+      <resize_and_optimize src-filename="tmp/final_1024.png"
+                           new-filename="../res/drawable-mdpi/ic_launcher.png"
+                           new-size="48" />
+  </target>
+  
+  <!-- The default target which builds all of the required icons -->
+  <target name="all_ic_launchers" depends="ic_launcher-web, xxhdpi_ic_launcher, xhdpi_ic_launcher, hdpi_ic_launcher, mdpi_ic_launcher, ic_launcher-feature"/>
+  
+  <target name="clean">
+      <delete dir="tmp"/>
+  </target>
+</project>
