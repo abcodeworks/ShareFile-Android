@@ -147,25 +147,15 @@
       <exec executable="convert">
       	<arg value="tmp/final_1024.png"/>
       	<arg value="-background"/>
-      	<arg value="none"/>
+      	<arg value="white"/>
       	<arg value="-resize"/>
         <arg value="500x500"/>
       	<arg value="-gravity"/>
       	<arg value="center"/>
       	<arg value="-extent"/>
       	<arg value="1024x500"/>      	
-	    <arg value="tmp/feature_with_alpha.png"/>
+	    <arg value="../ic_launcher-feature.png"/>
       </exec>
-	  <exec executable="convert">
-	  	<arg value="tmp/feature_with_alpha.png"/>
-		<arg value="-background"/>
-		<arg value="white"/>
-	  	<arg value="-flatten"/>
-        <arg value="../ic_launcher-feature.png"/>
-	  </exec>
-	  <exec executable="optipng">
-	      <arg value="../ic_launcher-feature.png" />
-	  </exec>
     </sequential>
   </target>
   
