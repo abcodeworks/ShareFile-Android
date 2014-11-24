@@ -21,7 +21,7 @@ import com.abcodeworks.sharefileapp.R;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.util.Log;
+//import android.util.Log;
 import android.widget.Toast;
 
 public class ShareAndViewActivity extends IntentHandlerActivity {

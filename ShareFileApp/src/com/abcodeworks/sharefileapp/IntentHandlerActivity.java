@@ -23,7 +23,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
+//import android.util.Log;
 
 abstract public class IntentHandlerActivity extends Activity {
 	abstract protected void handler(Intent intent);
