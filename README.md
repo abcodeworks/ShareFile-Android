@@ -12,7 +12,7 @@ and due to the Android architecture, I think it always will.
 
 Websites
 --------
-Android Marketplace: <br/>
+Android Marketplace: http://play.google.com/store/apps/details?id=com.abcodeworks.sharefile<br/>
 Source Code: https://github.com/abcodeworks/ShareFile-Android/<br/>
 
 Building
@@ -23,6 +23,27 @@ which contains the unit tester.  The projects were created using
 Eclipse ADT.  They should be built and tested using the Eclipse ADT.
 The root folder structure is not standard (usually the root is a project,
 not a workspace) but it seemed best given that we need two projects.
+
+Testing
+-------
+I wrote limited automated unit test cases in the
+ShareFileAppTest project.  This testing should be improved.
+I tried writing a test for the settings activity, but had trouble
+getting it to work completely.  So, I am not using it, but keep it in
+a separate branch in the git repository.
+These tests should be manually performed:
+- Change the settings.  Make sure the activities are enabled/disabled
+  as appropriate.
+- Make sure the links on the settings page work.
+- Make sure the activities receive files as expected (i.e. make sure
+  the intent filters work as expected).
+- Make sure the activities generate and send the share/view intents
+  appropriately.
+
+Notes
+-----
+- Per the Android guidelines, there should be no debug logging.
+  Since this is a small project, I chose to just comment them out.
 
 License
 -------
