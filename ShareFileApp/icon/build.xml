@@ -156,6 +156,9 @@
       	<arg value="1024x500"/>      	
 	    <arg value="../ic_launcher-feature.png"/>
       </exec>
+	  <exec executable="optipng">
+	    <arg value="../ic_launcher-feature.png" />
+	  </exec>
     </sequential>
   </target>
   
