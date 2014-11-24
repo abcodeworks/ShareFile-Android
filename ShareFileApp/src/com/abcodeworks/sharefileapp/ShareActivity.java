@@ -28,7 +28,7 @@ public class ShareActivity extends IntentHandlerActivity {
 	@Override
 	protected void handler(Intent intent) {
 	    if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-	    	Log.d("DownloadSharer", "Sending intent...");
+	    	//Log.d("DownloadSharer", "Sending intent...");
 
 	    	Intent sendIntent = ShareFileHelper.createShareIntent(intent);
 

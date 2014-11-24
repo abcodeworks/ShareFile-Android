@@ -38,11 +38,11 @@ abstract public class IntentHandlerActivity extends Activity {
 		
 		PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
 		
-		Log.d("ShareFile", "Class " + this.getClass().getName() + " handling intent.");
+		//Log.d("ShareFile", "Class " + this.getClass().getName() + " handling intent.");
 		
 		Intent intent = getIntent();
 
-		Log.d("ShareFile", "Type: " + intent.getType());
+		//Log.d("ShareFile", "Type: " + intent.getType());
 		
 		handler(intent);
 	}

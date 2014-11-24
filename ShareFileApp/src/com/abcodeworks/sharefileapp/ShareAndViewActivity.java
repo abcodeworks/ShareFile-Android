@@ -34,13 +34,13 @@ public class ShareAndViewActivity extends IntentHandlerActivity {
 	    if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 	    	Intent sendIntent = ShareFileHelper.createShareIntent(intent);
 
-	    	Log.d("DownloadSharer", "Doing send...");
+	    	//Log.d("DownloadSharer", "Doing send...");
 	    	try {
 	    		startActivityForResult(sendIntent, 0);
 	    	} catch(ActivityNotFoundException e) {
 	    		Toast.makeText(this, getString(R.string.msg_no_app_for_share), Toast.LENGTH_LONG).show();
 	    	}
-	    	Log.i("DownloadSharer", "done");
+	    	//Log.d("DownloadSharer", "done");
 	    	
 	    }
 	}
@@ -53,9 +53,9 @@ public class ShareAndViewActivity extends IntentHandlerActivity {
     	viewIntent.setAction(Intent.ACTION_VIEW);
     	viewIntent.setFlags(intent.getFlags());
     	viewIntent.setDataAndType(intent.getData(), intent.getType());
-    	Log.i("DownloadSharer", "Doing view...");
+    	//Log.d("DownloadSharer", "Doing view...");
         startActivity(viewIntent);
-        Log.i("DownloadSharer", "done");
+        //Log.d("DownloadSharer", "done");
         finish();
     }
 
