@@ -1,4 +1,4 @@
-package com.abcodeworks.sharefile.test;
+package com.abcodeworks.sharefileapp.test;
 
 import android.net.Uri;
 
@@ -7,7 +7,6 @@ import com.abcodeworks.sharefileapp.ShareActivity;
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.TextView;
 
 public class ShareActivityTest extends ActivityUnitTestCase<ShareActivity> {
 
@@ -16,12 +15,6 @@ public class ShareActivityTest extends ActivityUnitTestCase<ShareActivity> {
 	}
 	
 	ShareActivity shareActivity;
-
-    /*protected void setUp() throws Exception {
-        super.setUp();
-        startActivity(new Intent(getInstrumentation().getTargetContext(), ShareActivity.class), null, null);
-        shareActivity = (ShareActivity)getActivity();
-    }*/
     
     @SmallTest
     public void testSendViewIntent() {
@@ -38,8 +31,8 @@ public class ShareActivityTest extends ActivityUnitTestCase<ShareActivity> {
     	
     	Intent shareIntent = getStartedActivityIntent();
     	assertEquals(Intent.ACTION_SEND, shareIntent.getAction());
-    	String test = shareIntent.getExtras().get(Intent.EXTRA_STREAM).toString();
-    	assertEquals(uri, shareIntent.getExtras().get(Intent.EXTRA_STREAM).toString());
+    	String sharedUri = shareIntent.getExtras().get(Intent.EXTRA_STREAM).toString();
+    	assertEquals(uri, sharedUri);
     	assertNull(shareIntent.getData());
         assertEquals(type, shareIntent.getType());
     }

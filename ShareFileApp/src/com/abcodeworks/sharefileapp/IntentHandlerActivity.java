@@ -17,7 +17,7 @@
 
 package com.abcodeworks.sharefileapp;
 
-import com.abcodeworks.sharefile.R;
+import com.abcodeworks.sharefileapp.R;
 
 import android.app.Activity;
 import android.content.Intent;
