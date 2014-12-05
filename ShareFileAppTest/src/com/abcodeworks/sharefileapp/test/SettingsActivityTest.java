@@ -32,7 +32,6 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2<Setti
 	protected void setUp() throws Exception {
         super.setUp();
 
-        this.getInstrumentation().getTargetContext();
         setActivityInitialTouchMode(true);
         settingsActivity = getActivity();
         
