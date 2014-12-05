@@ -36,6 +36,10 @@ These tests should be manually performed:
   the intent filters work as expected).
 - Make sure the activities generate and send the share/view intents
   appropriately.
+  
+Generate APK (Deployment)
+-------------------------
+Use the File | Export... option and choose "Export Android Application".
 
 Notes
 -----
