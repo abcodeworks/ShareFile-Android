@@ -12,7 +12,7 @@ and due to the Android architecture, I think it always will.
 
 Websites
 --------
-Android Marketplace: http://play.google.com/store/apps/details?id=com.abcodeworks.sharefile<br/>
+Android Marketplace: http://play.google.com/store/apps/details?id=com.abcodeworks.sharefileapp<br/>
 Source Code: https://github.com/abcodeworks/ShareFile-Android/<br/>
 
 Building
@@ -28,9 +28,6 @@ Testing
 -------
 I wrote limited automated unit test cases in the
 ShareFileAppTest project.  This testing should be improved.
-I tried writing a test for the settings activity, but had trouble
-getting it to work completely.  So, I am not using it, but keep it in
-a separate branch in the git repository.
 These tests should be manually performed:
 - Change the settings.  Make sure the activities are enabled/disabled
   as appropriate.
