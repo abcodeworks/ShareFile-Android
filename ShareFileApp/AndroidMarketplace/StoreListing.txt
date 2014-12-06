@@ -1,0 +1,25 @@
+I will try to keep this up to date with what is in the store listing
+just for backup purposes.
+
+TITLE
+Share File
+
+SHORT DESCRIPTION
+When opening a file for viewing, gives the option to share it instead.
+
+FULL DESCRIPTION
+Some applications allow you to open files but do not give an option to share files.  This can be a problem, for example, if you want to send the file to a cloud service.
+
+This application serves a very limited purpose: when you open a file it gives you the option to instead share that file.
+
+Here is an example scenario:
+You are browsing files inside an Android application.  You see a PDF document that you want to send to your favorite cloud service (Dropbox, Google Drive, Skydrive, etc.).  But, the browser application does not give you the option to share the file.  You can open the file in a PDF viewer, and hopefully the viewer will give you the option to share, but depending on your viewer this may not be an option.  And even if it is, it still takes more time.  So, instead you open the PDF with the Share File application.  Then you are given the option to share with the cloud service application.
+
+CATEGORIZATION
+Type: Applications
+Category: Productivity
+Content rating: Everyone
+
+CONTACT DETAILS
+Website: http://github.com/abcodeworks
+Email: sharefile@abcodeworks.com
