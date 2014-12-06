@@ -22,10 +22,12 @@ import com.abcodeworks.sharefileapp.R;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 // Used this file as a guide:
 // https://github.com/intrications/intent-intercept/blob/76b79537ede9cd5b476eb267f66c12035a319058/app/src/main/java/uk/co/ashtonbrsc/intentexplode/Settings.java
@@ -59,6 +61,17 @@ public class SettingsActivity extends PreferenceActivity
 		super.onPostCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.pref_general);
+		
+		// Set the version on the settings page
+		// Some of this code was copied from:
+		// http://stackoverflow.com/questions/3637665/user-versionname-value-of-androidmanifest-xml-in-code/3637686#3637686
+		try {
+			Preference appVersionPref = findPreference(getString(R.string.pref_app_version));
+		    String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		    appVersionPref.setSummary(version);
+		} catch (NameNotFoundException e) {
+		    Log.e("ShareFileApp", e.getMessage());
+		}
 		
 		enableSharePref = findPreference(getString(R.string.pref_enable_share));
 		enableSharePref.setOnPreferenceChangeListener(this);

@@ -13,6 +13,11 @@
         android:summary="@string/pref_enable_share_and_view_summary" />
     
     <Preference
+        android:key="@string/pref_app_version"
+        android:title="@string/pref_app_version_title" >
+    </Preference>
+    
+    <Preference
         android:key="homepage"
         android:title="@string/pref_homepage_title" >
         <intent

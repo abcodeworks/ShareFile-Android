@@ -7,6 +7,9 @@
     <string name="pref_enable_share_and_view_title">Enable \"Share and View\" Option (EXPERIMENTAL)</string>
     <string name="pref_enable_share_and_view_summary">Enables a \"Share and View\" chooser option which first shares the file and then views it.  Use this option at your own risk!  It has a known issue when there are no other apps that can view the file - this results in an infinite loop which may cause Android to crash and restart.</string>
 
+    <string name="pref_app_version">app_version</string>
+    <string name="pref_app_version_title">Application Version</string>
+    
     <string name="pref_homepage_title">Homepage</string>
     <string name="pref_homepage_url">http://play.google.com/store/apps/details?id=com.abcodeworks.sharefileapp</string>
     
